@@ -1,0 +1,21 @@
+{ "Recipes": [
+    {
+     "id": 0,
+     "title": "cooked eggs",
+     "desc": "crack the eggs and cook them.",
+     "category": "breakfast"
+    },
+    {
+     "id": 1, 
+     "title": "hot dogs",
+     "desc": "boil the hot dogs in 2 quarts of water.",
+     "category": "lunch"
+    },
+    {
+     "id": 2,
+     "title": "meat loaf",
+     "desc": "bake the meat loaf at 350 for 1 hour.",
+     "category": "dinner"
+    }
+  ]
+}
