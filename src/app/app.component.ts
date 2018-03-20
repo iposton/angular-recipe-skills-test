@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { DataService } from './data.service';
 
 
 @Component({
@@ -8,43 +10,45 @@ import { HttpClient } from '@angular/common/http'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
-  // recipe model
-
-  // recipe = {
-    // id: 0,
-    // title: 'cooked eggs',
-    // desc: 'crack the eggs and cook them.',
-    // category: 'breakfast'
-  // }
-
-  recipes: Array <any>;
   categories: Array <any>;
 
- constructor(public http: HttpClient){}
-  public getJSON() {
-         this.http.get("./assets/recipes.json")
-           .subscribe(res => {
-      console.log(res['Recipes'], 'recipes');
-      this.recipes = res['Recipes'];
-    }) 
+ constructor(public http: HttpClient, public router: Router,  private route: ActivatedRoute, private dataService: DataService){
+   this.route.params.subscribe( params => {
+     params['term'] = 'all-recipes';
+     console.log(params['term']);
+ });
+ }
+  // public getJSON() {
+  //        this.http.get("./assets/recipes.json")
+  //          .subscribe(res => {
+  //     console.log(res['Recipes'], 'recipes');
+  //     this.recipes = res['Recipes'];
+  //   }) 
 
-              this.http.get("./assets/categories.json")
-           .subscribe(res => {
-      console.log(res['Categories'], 'categories');
-      this.categories = res['Categories'];
-    }) 
-  }
-
-
-  title = 'app';
+  //             this.http.get("./assets/categories.json")
+  //          .subscribe(res => {
+  //     console.log(res['Categories'], 'categories');
+  //     this.categories = res['Categories'];
+  //   }) 
+  // }
 
   //position for tooltip
   position = 'above';
 
 ngOnInit() {
-  this.getJSON();
+
+    this.dataService
+          .getCategories().subscribe(res => {
+             console.log(res['Categories'], 'categories');
+             this.categories = res['Categories'];
+    }) 
 }
+
+ // public goToThisCategory(category) {
+ //    this.router.navigateByUrl('/'+category+'/');
+ //    //this.loadIdNext(id);
+
+ //  }
 
 
 }

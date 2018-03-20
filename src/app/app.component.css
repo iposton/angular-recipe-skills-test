@@ -20,6 +20,11 @@
   text-align: center;
 }
 
+.docs-footer .docs-footer-links ul {
+  text-align: center;
+  list-style: none;
+}
+
 .docs-footer a {
   color: #fff;
   text-decoration: none;
@@ -36,7 +41,6 @@
 .logo-container {
   max-width: 54px; 
   text-align: center;
-  font-family: 'coinyregular';
 }
 
 
@@ -62,28 +66,21 @@
 }
 
 
-
-
-.card-wrap {
-    display: inline-block;
-    margin: 20px;
-    vertical-align: top;
-    width: 250px;
-}
-
-.card-wrap img {
-  width: 70%;
-}
-
 .category-list {
-  width: 350px;
+  width: 185px;
   list-style: none;
+  font-size: 14px;
+  padding: 10px;
+}
+
+input {
+  margin: 5px;
 }
 
 .category-list li {
   display: block;
-  height: 100px;
-  line-height: 100px;
+  height: 58px;
+  line-height: 58px;
 }
 
 .category-list img {

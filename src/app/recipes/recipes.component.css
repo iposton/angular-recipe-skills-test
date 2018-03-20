@@ -1,0 +1,10 @@
+.card-wrap {
+    display: inline-block;
+    margin: 20px;
+    vertical-align: top;
+    width: 250px;
+}
+
+.card-wrap img {
+  width: 100%;
+}

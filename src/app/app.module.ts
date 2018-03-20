@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
 import { MatCardModule, 
         MatGridListModule, 
@@ -18,12 +19,28 @@ import { MatCardModule,
         MatProgressSpinnerModule, 
         MatSidenavModule } from '@angular/material';
 
+import { DataService } from './data.service';
 import { AppComponent } from './app.component';
+import { RecipesComponent } from './recipes/recipes.component';
+
+const routes: Routes = [
+ {
+          path: '',
+          redirectTo: 'all-recipes',
+          pathMatch: 'full'
+  },
+ { 
+        path: 'all-recipes', 
+        component: RecipesComponent 
+ }
+ 
+];
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RecipesComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +60,10 @@ import { AppComponent } from './app.component';
     MatInputModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
