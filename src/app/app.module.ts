@@ -21,10 +21,11 @@ import { MatCardModule,
         MatSidenavModule } from '@angular/material';
 
 import { DataService } from './data.service';
-import { AppComponent } from './app.component';
+import { AppComponent, RecipeDialog } from './app.component';
 import { RecipesComponent } from './recipes/recipes.component';
 import { HighlightSearchPipe } from './highlight-search.pipe';
 import { FilterPipe } from './filter.pipe';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 
 const routes: Routes = [
  {
@@ -37,8 +38,16 @@ const routes: Routes = [
         component: RecipesComponent 
  },
  { 
+        path: 'all-recipes/:id', 
+        component: RecipeDetailsComponent 
+ },
+ { 
         path: ':term', 
         component: RecipesComponent 
+ },
+ { 
+        path: ':term/:id', 
+        component: RecipeDetailsComponent 
  }
  
 ];
@@ -49,7 +58,9 @@ const routes: Routes = [
     AppComponent,
     RecipesComponent,
     HighlightSearchPipe,
-    FilterPipe
+    FilterPipe,
+    RecipeDialog,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +85,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [DataService],
+  entryComponents: [
+    RecipeDialog
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

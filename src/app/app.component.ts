@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DataService } from './data.service';
 import { HighlightSearchPipe } from './highlight-search.pipe';
 import { FilterPipe } from './filter.pipe';
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   searchTerm: string = '';
   selectedItem: any;
 
- constructor(public http: HttpClient, public router: Router,  private route: ActivatedRoute, private dataService: DataService) {}
+ constructor(public http: HttpClient, public router: Router,  private route: ActivatedRoute, private dataService: DataService, public dialog: MatDialog) {}
 
 
 ngOnInit() {
@@ -33,11 +34,39 @@ ngOnInit() {
 public goToThisCategory(category) {
     this.selectedItem = category;
     this.router.navigateByUrl('/'+category);
-    //this.loadIdNext(id);
-
 }
 
 //position for tooltip
 position = 'above';
 
+  public open(event) {
+    this.dialog.open(RecipeDialog, {
+      width: '600px',
+    });
+  }
+
+}
+
+@Component({
+  selector: 'recipe-dialog',
+  template: `<i (click)="dialogRef.close()" style="float:right; cursor:pointer;" class="material-icons">close</i>
+  <span style="color:#00aced;">Add New Recipe</span> 
+  <mat-dialog-content>
+ recipe form here
+</mat-dialog-content>`,
+})
+
+export class RecipeDialog implements OnInit {
+  noPosts: any;
+  tweetsData: any;
+  constructor(public dialogRef: MatDialogRef <RecipeDialog>) {
+
+  }
+
+
+
+
+  ngOnInit() {
+    
+  }
 }

@@ -1,8 +1,8 @@
 <mat-toolbar color="primary">
   <a href="/all-recipes" style="color: #fff; text-decoration: none;">Simple Recipes</a>
   <span style="flex: 1 1 auto;"></span>
-  <i style="cursor:pointer;" class="material-icons">add</i>
-  <i (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
+  <i matTooltip="Add Recipe" [matTooltipPosition]="position" style="cursor:pointer;" class="material-icons" (click)="open()">add</i>
+  <i matTooltip="Menu" [matTooltipPosition]="position" (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
 </mat-toolbar>
 <div class="full-container">
   <mat-sidenav-container class="example-container">

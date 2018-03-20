@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { DataService } from '../data.service';
 
@@ -10,7 +10,7 @@ import { DataService } from '../data.service';
 export class RecipesComponent implements OnInit {
   recipes: Array <any>;
   searchTerm: string = '';
-  constructor(private dataService: DataService, public router: Router,  private route: ActivatedRoute,) {
+  constructor(private dataService: DataService, public router: Router,  private route: ActivatedRoute) {
 
       this.route.params.subscribe( params => {
        this.searchTerm = params['term'];
@@ -26,4 +26,18 @@ export class RecipesComponent implements OnInit {
     }) 
   }
 
+  public goToThisRecipe(id) {
+    if(this.searchTerm != null) {
+      this.router.navigateByUrl('/'+this.searchTerm+'/'+id);
+    } else {
+      this.router.navigateByUrl('/all-recipes/'+id);
+    }
+  }
+
+ 
+
 }
+
+
+
+

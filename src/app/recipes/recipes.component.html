@@ -1,9 +1,8 @@
- <div class="card-wrap" *ngFor="let rec of recipes | filter: searchTerm">
+<div class="card-wrap" *ngFor="let rec of recipes | filter: searchTerm">
   <mat-card>
     <p>{{rec.title}}</p>
     <img src="../assets/images/recipe-logo.jpeg" alt="">
-    <p>{{rec.desc}}</p> 
-    <button mat-raised-button>read more</button> <i style="cursor:pointer;" class="material-icons">edit</i> <i style="cursor:pointer; color: red;" class="material-icons">delete</i>
-
+    <p>{{rec.desc}}</p>
+    <button mat-raised-button (click)="goToThisRecipe(rec.id)">read more</button> <i style="cursor:pointer;" class="material-icons">edit</i> <i style="cursor:pointer; color: red;" class="material-icons">delete</i>
   </mat-card>
 </div>
