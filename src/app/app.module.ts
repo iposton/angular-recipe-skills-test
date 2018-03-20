@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from '@angular/forms';
 import { MatCardModule, 
         MatGridListModule, 
         MatToolbarModule, 
@@ -22,15 +23,21 @@ import { MatCardModule,
 import { DataService } from './data.service';
 import { AppComponent } from './app.component';
 import { RecipesComponent } from './recipes/recipes.component';
+import { HighlightSearchPipe } from './highlight-search.pipe';
+import { FilterPipe } from './filter.pipe';
 
 const routes: Routes = [
  {
-          path: '',
-          redirectTo: 'all-recipes',
-          pathMatch: 'full'
-  },
+        path: '',
+        redirectTo: 'all-recipes',
+        pathMatch: 'full'
+ },
  { 
         path: 'all-recipes', 
+        component: RecipesComponent 
+ },
+ { 
+        path: ':term', 
         component: RecipesComponent 
  }
  
@@ -40,11 +47,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    RecipesComponent
+    RecipesComponent,
+    HighlightSearchPipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     MatCardModule,
     MatGridListModule,
     MatToolbarModule,

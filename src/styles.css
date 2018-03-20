@@ -10,3 +10,8 @@ body {
 .full-container {
   height: 100vh;
 }
+
+.highlight {
+  color:#000;    
+  font-weight:bold;
+}

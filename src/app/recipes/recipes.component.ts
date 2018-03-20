@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { DataService } from '../data.service';
 
 @Component({
@@ -8,7 +9,14 @@ import { DataService } from '../data.service';
 })
 export class RecipesComponent implements OnInit {
   recipes: Array <any>;
-  constructor(private dataService: DataService) { }
+  searchTerm: string = '';
+  constructor(private dataService: DataService, public router: Router,  private route: ActivatedRoute,) {
+
+      this.route.params.subscribe( params => {
+       this.searchTerm = params['term'];
+      });
+
+   }
 
   ngOnInit() {
        this.dataService.getRecipes()

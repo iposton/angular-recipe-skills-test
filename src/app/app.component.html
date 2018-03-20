@@ -1,42 +1,43 @@
-<mat-toolbar color="primary">Simple Recipes 
+<mat-toolbar color="primary">
+  <a href="/all-recipes" style="color: #fff; text-decoration: none;">Simple Recipes</a>
   <span style="flex: 1 1 auto;"></span>
-
- <i style="cursor:pointer;" class="material-icons">add</i> 
- <i (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i> 
-
-
+  <i style="cursor:pointer;" class="material-icons">add</i>
+  <i (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
 </mat-toolbar>
-
 <div class="full-container">
-  
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav position="end">
-    <input type="text" placeholder="search" />
-   <ul class="category-list">
-    <li *ngFor="let cat of categories" [routerLinkActive]="['active']"><span><img src="../assets/images/{{cat.category}}.jpeg" alt=""> </span>&nbsp; &nbsp;<span> {{cat.category}}</span></li>
- </ul>
-  </mat-sidenav>
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav mode="side" #sidenav position="end">
+      <input type="text" placeholder="search" [(ngModel)]="searchTerm" /> <span><i style="cursor:pointer; float: right;" class="material-icons" (click)="sidenav.toggle()">highlight_off</i></span>
+      <ul class="category-list">
+        <li [ngClass]="{'active': selectedItem == cat}" *ngFor="let cat of categories | filter: searchTerm" (click)="goToThisCategory(cat.category)">
+          <span><img src="../assets/images/{{cat.category}}.jpeg" alt=""> </span>&nbsp; &nbsp;<span [innerHTML]="cat.category | highlight: searchTerm"></span>
+        </li>
+      </ul>
+    </mat-sidenav>
 
-  <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 
-  <footer class="docs-footer">
-    <div class="docs-footer-list">
-      <div class="footer-logo">
-        <div class="logo-container">
-          
+    <footer class="docs-footer">
+      <div class="docs-footer-list">
+        <div class="footer-logo">
+          <div class="logo-container">
             <a href="#">Recipes</a>
-             
-        </div> 
-        <div style="max-width: 100px;">
-          <span style="font-family: Roboto; font-size: 10px; font-weight: 500;">I &hearts; Angular</span>
+          </div>
+          <div style="max-width: 100px;">
+            <span style="font-family: Roboto; font-size: 10px; font-weight: 500;">I &hearts; Angular</span>
+          </div>
         </div>
-      
-    </div>
-      <div class="docs-footer-links"><ul><li matTooltip="Ian Poston, a web developer from Los Angeles." [matTooltipPosition]="position"><a href="https://twitter.com/intent/follow?screen_name=ianposton&commit=Log%20in%20and%20follow%20%40ianposton&session%5Busername_or_email%5D=ianposton&tw_p=followbutton&region=follow_link">Who Built This?</a></li></ul></div>
-      <div class="docs-footer-links" ><ul ><li matTooltip="This is a recipe app. In this app I am using angular5. Search for recipes by category and add a new recipe!" [matTooltipPosition]="position">About</li></ul></div>
-    </div>
-  </footer>
-
+        <div class="docs-footer-links">
+          <ul>
+            <li matTooltip="Ian Poston, a web developer from Los Angeles." [matTooltipPosition]="position"><a href="https://twitter.com/intent/follow?screen_name=ianposton&commit=Log%20in%20and%20follow%20%40ianposton&session%5Busername_or_email%5D=ianposton&tw_p=followbutton&region=follow_link">Who Built This?</a></li>
+          </ul>
+        </div>
+        <div class="docs-footer-links">
+          <ul>
+            <li matTooltip="This is a recipe app. In this app I am using angular5. Search for recipes by category and add a new recipe!" [matTooltipPosition]="position">About</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   </mat-sidenav-container>
-  </div>
-
+</div>

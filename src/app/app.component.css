@@ -7,8 +7,6 @@
     display: flex;
 }
 
-
-
 .docs-footer div {
   display: inline-block;
   flex-grow: 1;
@@ -61,16 +59,16 @@
 
 .example-container {
   position: relative;
-  height: 100vh;
-  
+  height: 100vh; 
 }
 
 
 .category-list {
-  width: 185px;
+  width: 195px;
   list-style: none;
   font-size: 14px;
-  padding: 10px;
+  padding: 0px;
+  color: #333;
 }
 
 input {
@@ -81,6 +79,13 @@ input {
   display: block;
   height: 58px;
   line-height: 58px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.category-list li:hover,
+.category-list li.active {
+  background: #ccc;
 }
 
 .category-list img {

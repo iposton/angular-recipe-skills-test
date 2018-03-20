@@ -1,4 +1,4 @@
- <div class="card-wrap" *ngFor="let rec of recipes">
+ <div class="card-wrap" *ngFor="let rec of recipes | filter: searchTerm">
   <mat-card>
     <p>{{rec.title}}</p>
     <img src="../assets/images/recipe-logo.jpeg" alt="">

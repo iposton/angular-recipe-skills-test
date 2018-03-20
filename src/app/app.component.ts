@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from './data.service';
+import { HighlightSearchPipe } from './highlight-search.pipe';
+import { FilterPipe } from './filter.pipe';
 
 
 @Component({
@@ -11,29 +13,12 @@ import { DataService } from './data.service';
 })
 export class AppComponent implements OnInit {
   categories: Array <any>;
+  categoriesCopy: Array <any>;
+  searchTerm: string = '';
+  selectedItem: any;
 
- constructor(public http: HttpClient, public router: Router,  private route: ActivatedRoute, private dataService: DataService){
-   this.route.params.subscribe( params => {
-     params['term'] = 'all-recipes';
-     console.log(params['term']);
- });
- }
-  // public getJSON() {
-  //        this.http.get("./assets/recipes.json")
-  //          .subscribe(res => {
-  //     console.log(res['Recipes'], 'recipes');
-  //     this.recipes = res['Recipes'];
-  //   }) 
+ constructor(public http: HttpClient, public router: Router,  private route: ActivatedRoute, private dataService: DataService) {}
 
-  //             this.http.get("./assets/categories.json")
-  //          .subscribe(res => {
-  //     console.log(res['Categories'], 'categories');
-  //     this.categories = res['Categories'];
-  //   }) 
-  // }
-
-  //position for tooltip
-  position = 'above';
 
 ngOnInit() {
 
@@ -41,14 +26,18 @@ ngOnInit() {
           .getCategories().subscribe(res => {
              console.log(res['Categories'], 'categories');
              this.categories = res['Categories'];
+             this.categoriesCopy = res['Categories'];
     }) 
 }
 
- // public goToThisCategory(category) {
- //    this.router.navigateByUrl('/'+category+'/');
- //    //this.loadIdNext(id);
+public goToThisCategory(category) {
+    this.selectedItem = category;
+    this.router.navigateByUrl('/'+category);
+    //this.loadIdNext(id);
 
- //  }
+}
 
+//position for tooltip
+position = 'above';
 
 }
