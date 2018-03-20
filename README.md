@@ -1,4 +1,4 @@
-# Recipes App - <a href="#">Demo</a> 
+# Recipes App - <a href="https://my-recipes-angular5.herokuapp.com/all-recipes">Demo</a> 
  
 ### Description
 This is a single page app that allows you to create a recipe and select other recipes by category located in the side menu navigation. Click the hamburger menu in the header bar to see catoegories. Click to plus icon to add a recipe in a modal. Enjoy :)
