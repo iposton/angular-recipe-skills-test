@@ -9,21 +9,31 @@ import { DataService } from '../data.service';
 })
 export class RecipesComponent implements OnInit {
   recipes: Array <any>;
+  sentNewRecipes: Array <any>;
   searchTerm: string = '';
-  constructor(private dataService: DataService, public router: Router,  private route: ActivatedRoute) {
 
+  constructor(private dataService: DataService, public router: Router,  private route: ActivatedRoute) {
+      this.sentNewRecipes = this.dataService.getNewRecipes();
       this.route.params.subscribe( params => {
        this.searchTerm = params['term'];
       });
-
    }
 
   ngOnInit() {
-       this.dataService.getRecipes()
+    
+
+    if (this.sentNewRecipes === undefined) {
+
+         this.dataService.getRecipes()
          .subscribe(res => {
-      console.log(res['Recipes'], 'recipes');
-      this.recipes = res['Recipes'];
-    }) 
+          console.log(res['Recipes'], 'recipes');
+          this.recipes = res['Recipes'];
+        })
+
+    } else {
+      console.log('new recipes :)') 
+      this.recipes = this.sentNewRecipes;
+    } 
   }
 
   public goToThisRecipe(id) {
@@ -34,10 +44,4 @@ export class RecipesComponent implements OnInit {
     }
   }
 
- 
-
 }
-
-
-
-

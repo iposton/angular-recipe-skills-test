@@ -57,9 +57,23 @@
 
 }
 
-.example-container {
+i {
+  cursor: pointer;
+}
+
+.toolbar-header {
+  cursor: pointer;
+}
+
+
+.sidenav-container {
   position: relative;
   height: 100vh; 
+}
+
+.sidenav-container .sidenav-close {
+  float: right;
+  color: #777;
 }
 
 
@@ -83,9 +97,16 @@ input {
   padding: 5px;
 }
 
-.category-list li:hover,
+.category-list li:hover {
+  background: #eee;
+}
+
+
 .category-list li.active {
-  background: #ccc;
+  background: #eee;
+  color: #663fb4;
+  border: dashed 1.5px #999;
+  border-radius: 10px;
 }
 
 .category-list img {

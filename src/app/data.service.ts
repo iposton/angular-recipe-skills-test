@@ -2,13 +2,31 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
+let sendingNewRecipes;
+let sentRecipes;
+
+
 @Injectable()
 export class DataService {
 
   recipes: Observable < any > = null;
   categories: Observable < any > = null;
+  
 
   constructor(public http: HttpClient) {}
+
+   sendNewRecipes(newRecipesArray) {
+      console.log("sending new recipes to service...");
+      sendingNewRecipes = newRecipesArray;
+      
+   }
+
+   getNewRecipes() {
+      console.log("new recipes sent to component...");
+      sentRecipes = sendingNewRecipes;
+      return sentRecipes;
+   }
+
 
    getRecipes() {
     

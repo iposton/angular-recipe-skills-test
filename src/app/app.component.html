@@ -1,15 +1,15 @@
 <mat-toolbar color="primary">
-  <a href="/all-recipes" style="color: #fff; text-decoration: none;">Simple Recipes</a>
+  <span class="toolbar-header" (click)="goToAllRecipes()">Simple Recipes</span>
   <span style="flex: 1 1 auto;"></span>
-  <i matTooltip="Add Recipe" [matTooltipPosition]="position" style="cursor:pointer;" class="material-icons" (click)="open()">add</i>
+  <i matTooltip="Add Recipe" [matTooltipPosition]="position" class="material-icons" (click)="open(event, categories)">add</i>
   <i matTooltip="Menu" [matTooltipPosition]="position" (click)="sidenav.toggle()" style="cursor:pointer;" class="material-icons">menu</i>
 </mat-toolbar>
 <div class="full-container">
-  <mat-sidenav-container class="example-container">
+  <mat-sidenav-container class="sidenav-container">
     <mat-sidenav mode="side" #sidenav position="end">
-      <input type="text" placeholder="search" [(ngModel)]="searchTerm" /> <span><i style="cursor:pointer; float: right;" class="material-icons" (click)="sidenav.toggle()">highlight_off</i></span>
+      <input type="text" placeholder="search" [(ngModel)]="searchTerm" /> <span><i  class="material-icons sidenav-close" (click)="sidenav.toggle()">highlight_off</i></span>
       <ul class="category-list">
-        <li [ngClass]="{'active': selectedItem == cat}" *ngFor="let cat of categories | filter: searchTerm" (click)="goToThisCategory(cat.category)">
+        <li *ngFor="let cat of categories | filter: searchTerm" [class.active]="cat.category === selectedCategory" (click)="goToThisCategory(cat.category); onSelect(cat.category)">
           <span><img src="../assets/images/{{cat.category}}.jpeg" alt=""> </span>&nbsp; &nbsp;<span [innerHTML]="cat.category | highlight: searchTerm"></span>
         </li>
       </ul>
