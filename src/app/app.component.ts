@@ -104,6 +104,7 @@ position = 'above';
 export class RecipeDialog implements OnInit {
   newRecipes: Array <any>;
   categories: Array <any>;
+  sentNewRecipes: any;
   
 
   // recipe model
@@ -117,12 +118,9 @@ export class RecipeDialog implements OnInit {
   constructor(public dialogRef: MatDialogRef <RecipeDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService,  public router: Router) {
         // categories passed into dialog for mat-select menu
         this.categories = this.data;
+        this.sentNewRecipes = this.dataService.getNewRecipes();
         
-         this.dataService.getRecipes()
-         .subscribe(res => {
-          console.log(res['Recipes'], 'recipes');
-          this.newRecipes = res['Recipes'];
-        })
+      
    }
 
  public addRecipe() {
@@ -140,6 +138,19 @@ export class RecipeDialog implements OnInit {
 
 
   ngOnInit() {
+
+     if (this.sentNewRecipes === undefined) {
+
+         this.dataService.getRecipes()
+         .subscribe(res => {
+          console.log(res['Recipes'], 'recipes');
+          this.newRecipes = res['Recipes'];
+        })
+
+    } else {
+      console.log('new recipes :)') 
+      this.newRecipes = this.sentNewRecipes;
+    } 
 
   }
 }
