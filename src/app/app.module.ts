@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule, 
         MatGridListModule, 
         MatToolbarModule, 
@@ -22,7 +22,7 @@ import { MatCardModule,
 
 import { DataService } from './data.service';
 import { AppComponent, RecipeDialog } from './app.component';
-import { RecipesComponent } from './recipes/recipes.component';
+import { RecipesComponent, EditDialog } from './recipes/recipes.component';
 import { HighlightSearchPipe } from './highlight-search.pipe';
 import { FilterPipe } from './filter.pipe';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
@@ -60,6 +60,7 @@ const routes: Routes = [
     HighlightSearchPipe,
     FilterPipe,
     RecipeDialog,
+    EditDialog,
     RecipeDetailsComponent
   ],
   imports: [
@@ -87,7 +88,7 @@ const routes: Routes = [
   ],
   providers: [DataService],
   entryComponents: [
-    RecipeDialog
+    RecipeDialog, EditDialog
   ],
   bootstrap: [AppComponent]
 })

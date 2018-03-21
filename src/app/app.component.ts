@@ -6,7 +6,6 @@ import { DataService } from './data.service';
 import { HighlightSearchPipe } from './highlight-search.pipe';
 import { FilterPipe } from './filter.pipe';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,57 +16,48 @@ export class AppComponent implements OnInit {
   categoriesCopy: Array <any>;
   searchTerm: string = '';
   selectedCategory: any;
-  
- constructor(public http: HttpClient, public router: Router,  private route: ActivatedRoute, private dataService: DataService, public dialog: MatDialog) {
 
-    
-   
- }
+  constructor(public http: HttpClient, public router: Router, private route: ActivatedRoute, private dataService: DataService, public dialog: MatDialog) {}
 
 
-ngOnInit() {
-
+  ngOnInit() {
     this.dataService
-          .getCategories().subscribe(res => {
-             console.log(res['Categories'], 'categories');
-             this.categories = res['Categories'];
-             this.categoriesCopy = res['Categories'];
-    }) 
+      .getCategories().subscribe(res => {
+        console.log(res['Categories'], 'categories');
+        this.categories = res['Categories'];
+        this.categoriesCopy = res['Categories'];
+      })
+  }
 
-   
-}
-
-public goToThisCategory(category) {
+  public goToThisCategory(category) {
     //this.selectedItem = category;
-    this.router.navigateByUrl('/'+category);
-}
+    this.router.navigateByUrl('/' + category);
+  }
 
 
-public onSelect(category) { 
+  public onSelect(category) {
 
-  //this.dataService.selectedCategory = category; 
-  this.selectedCategory = category;
+    //this.dataService.selectedCategory = category; 
+    this.selectedCategory = category;
 
-}
+  }
 
-public goToAllRecipes() { 
+  public goToAllRecipes() {
     this.selectedCategory = '';
     this.router.navigateByUrl('/all-recipes');
-}
+  }
 
-//position for tooltip
-position = 'above';
+  //position for tooltip
+  position = 'above';
 
   public open(event, categories) {
- 
     this.dialog.open(RecipeDialog, {
-      data: categories,
-      width: '320px',
-    }).afterClosed()
-    .subscribe(category => {
-     
-      this.selectedCategory = category;
-  });
+        data: categories,
+        width: '320px',
+      }).afterClosed()
+      .subscribe(category => {
+        this.selectedCategory = category;
+      });
   }
 
 }
@@ -102,55 +92,51 @@ position = 'above';
 })
 
 export class RecipeDialog implements OnInit {
-  newRecipes: Array <any>;
-  categories: Array <any>;
+  newRecipes: Array <any> ;
+  categories: Array <any> ;
   sentNewRecipes: any;
-  
 
   // recipe model
   newRecipe = {
-      title: '',
-      desc: '',
-      category: 'all-recipes',
-      image: '../assets/images/recipe-logo.jpeg'   
+    id: null,
+    title: '',
+    desc: '',
+    category: 'all-recipes',
+    image: '../assets/images/recipe-logo.jpeg'
   };
 
-  constructor(public dialogRef: MatDialogRef <RecipeDialog>, @Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService,  public router: Router) {
-        // categories passed into dialog for mat-select menu
-        this.categories = this.data;
-        this.sentNewRecipes = this.dataService.getNewRecipes();
-        
-      
-   }
+  constructor(public dialogRef: MatDialogRef < RecipeDialog > , @Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService, public router: Router) {
+    // categories passed into dialog for mat-select menu
+    this.categories = this.data;
+    this.sentNewRecipes = this.dataService.getNewRecipes();
+  }
 
- public addRecipe() {
+  public addRecipe() {
+    this.newRecipe.id = this.newRecipes.length;
     this.newRecipes.push(this.newRecipe);
     console.log(this.newRecipe, 'recipe created');
-    
-    this.dataService
-          .sendNewRecipes(this.newRecipes);
 
-    this.router.navigateByUrl('/'+this.newRecipe.category);
+    this.dataService
+      .sendNewRecipes(this.newRecipes);
+
+    this.router.navigateByUrl('/' + this.newRecipe.category);
     this.dialogRef.close(this.newRecipe.category);
 
- }
-
-
+  }
 
   ngOnInit() {
 
-     if (this.sentNewRecipes === undefined) {
+    if (this.sentNewRecipes === undefined) {
 
-         this.dataService.getRecipes()
-         .subscribe(res => {
+      this.dataService.getRecipes()
+        .subscribe(res => {
           console.log(res['Recipes'], 'recipes');
           this.newRecipes = res['Recipes'];
         })
 
     } else {
-      console.log('new recipes :)') 
       this.newRecipes = this.sentNewRecipes;
-    } 
+    }
 
   }
 }

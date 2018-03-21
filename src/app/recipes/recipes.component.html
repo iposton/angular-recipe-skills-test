@@ -3,6 +3,6 @@
     <p>{{rec.title}}</p>
     <img src="{{rec.image}}" alt="">
     <p>{{rec.desc}}</p>
-    <button mat-raised-button (click)="goToThisRecipe(rec.id)">read more</button> <i style="cursor:pointer;" class="material-icons">edit</i> <i style="cursor:pointer; color: red;" class="material-icons">delete</i>
+    <button mat-raised-button (click)="goToThisRecipe(rec.id)">read more</button> <i style="cursor:pointer;" class="material-icons" (click)="open(event, rec)">edit</i> <i style="cursor:pointer; color: red;" class="material-icons" (click)="delete(rec)">delete</i>
   </mat-card>
 </div>
