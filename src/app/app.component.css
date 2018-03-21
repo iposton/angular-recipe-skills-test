@@ -1,3 +1,7 @@
+footer {
+  position: fixed; bottom: 0px; width: 100%; 
+}
+
 .docs-footer {
     margin-top: 40px;
     padding: 12px;
