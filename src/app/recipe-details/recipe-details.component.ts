@@ -13,8 +13,10 @@ export class RecipeDetailsComponent implements OnInit {
   selectedRecipe: Observable <any> = null;
   recipeID: any;
   recipes: Array <any>;
+  sentNewRecipes: Array <any>;
 
   constructor(private dataService: DataService, public router: Router, private route: ActivatedRoute) {
+    this.sentNewRecipes = this.dataService.getNewRecipes();
     this.route.params.subscribe(params => {
       this.recipeID = params.id;
     });
@@ -36,12 +38,20 @@ export class RecipeDetailsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.getRecipes()
-      .subscribe(res => {
-        console.log(res['Recipes'], 'recipes');
-        this.recipes = res['Recipes'];
-        this.loadRecipe(this.recipes);
-      })
+    if (this.sentNewRecipes === undefined) {
+      this.dataService.getRecipes()
+        .subscribe(res => {
+          console.log(res['Recipes'], 'recipes');
+          this.recipes = res['Recipes'];
+          this.loadRecipe(this.recipes);
+        })
+
+    } else {
+      this.recipes = this.sentNewRecipes;
+      this.loadRecipe(this.recipes);
+    }
+
+   
   }
 
 }

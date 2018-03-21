@@ -9,8 +9,8 @@ import { DataService } from '../data.service';
   styleUrls: ['./recipes.component.css']
 })
 export class RecipesComponent implements OnInit {
-  recipes: Array <any> ;
-  sentNewRecipes: Array <any> ;
+  recipes: Array <any>;
+  sentNewRecipes: Array <any>;
   searchTerm: string = '';
 
   constructor(private dataService: DataService, public router: Router, private route: ActivatedRoute, public dialog: MatDialog) {
