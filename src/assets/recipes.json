@@ -20,5 +20,49 @@
      "category": "dinner",
      "image": "../assets/images/recipe-logo.jpeg"
     }
+  ],
+
+ "Categories": [
+    {
+     "id": 0,
+     "category": "breakfast"
+    },
+    {
+     "id": 1, 
+     "category": "lunch"
+    },
+    {
+     "id": 2,
+     "category": "dinner"
+    },
+    {
+     "id": 3,
+     "category": "snacks"
+    },
+    {
+     "id": 4, 
+     "category": "soups"
+    },
+    {
+     "id": 5,
+     "category": "vegetarian"
+    },
+    {
+     "id": 6,
+     "category": "salads"
+    },
+    {
+     "id": 7, 
+     "category": "baking"
+    },
+    {
+     "id": 8,
+     "category": "desserts"
+    },
+    {
+     "id": 9,
+     "category": "drinks"
+    }
   ]
+
 }

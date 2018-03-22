@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DataService } from '../data.service';
+import { FirebaseService } from '../firebase.service';
 
 @Component({
   selector: 'app-recipes',
@@ -13,26 +14,21 @@ export class RecipesComponent implements OnInit {
   sentNewRecipes: Array <any>;
   searchTerm: string = '';
 
-  constructor(private dataService: DataService, public router: Router, private route: ActivatedRoute, public dialog: MatDialog) {
-    this.sentNewRecipes = this.dataService.getNewRecipes();
+  constructor(private dataService: DataService, public router: Router, private route: ActivatedRoute, public dialog: MatDialog, private fbService: FirebaseService) {
+    // this.sentNewRecipes = this.dataService.getNewRecipes();
     this.route.params.subscribe(params => {
       this.searchTerm = params['term'];
     });
+
   }
 
   ngOnInit() {
 
-    if (this.sentNewRecipes === undefined) {
-
-      this.dataService.getRecipes()
-        .subscribe(res => {
-          console.log(res['Recipes'], 'recipes');
-          this.recipes = res['Recipes'];
-        })
-
-    } else {
-      this.recipes = this.sentNewRecipes;
-    }
+     this.fbService.getRecipes()
+      .subscribe(res => { 
+        //console.log(res);
+        this.recipes = res;
+      })
   }
 
   public goToThisRecipe(id) {
@@ -47,24 +43,20 @@ export class RecipesComponent implements OnInit {
     this.dialog.open(EditDialog, {
       data: data,
       width: '320px',
-    })
+    }).afterClosed()
+      .subscribe(category => {
+        this.router.navigateByUrl('/' + category);
+      });
 
   }
 
   public delete(data) {
-    var result = confirm("delete " + data.title + " recipe?");
-    if (result) {
-      let i;
-      this.recipes.forEach((item, index) => {
-        i = index;
-        if (this.recipes[i].id === data.id) {
-          this.recipes.splice(i, 1);
-        }
-      })
 
+    let result = confirm("delete " + data.title + " recipe?");
+    if (result) {
+      this.fbService.deleteRecipe(data.key); 
     }
   }
-
 }
 
 @Component({
@@ -107,59 +99,42 @@ export class EditDialog implements OnInit {
   sentNewRecipes: any;
   recipeIndex: any;
 
-  constructor(public dialogRef: MatDialogRef <EditDialog> , @Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService, public router: Router) {
+  constructor(public dialogRef: MatDialogRef <EditDialog> , @Inject(MAT_DIALOG_DATA) public data: any, private dataService: DataService, public router: Router, private fbService: FirebaseService) {
 
     this.recipe = this.data;
-    this.sentNewRecipes = this.dataService.getNewRecipes();
+    // this.sentNewRecipes = this.dataService.getNewRecipes();
     console.log(this.sentNewRecipes, 'Recipes');
-    this.dataService.getCategories()
+
+    this.fbService.getCategories()
       .subscribe(res => {
-        console.log(res['Categories'], 'Categories');
-        this.categories = res['Categories'];
-      })
+        this.categories = res;
+    })
 
 
   }
 
   public updateRecipe() {
-    console.log(this.newRecipes[this.recipe.id], 'recipe updated');
+    // console.log(this.newRecipes[this.recipeIndex], 'updated recipe');
+    this.fbService
+      .updateRecipe(this.newRecipes[this.recipeIndex]);
 
-    this.dataService
-      .sendNewRecipes(this.newRecipes);
-
-    this.router.navigateByUrl('/' + this.newRecipes[this.recipeIndex].category);
-    this.dialogRef.close();
-
+    this.dialogRef.close(this.newRecipes[this.recipeIndex].category);
   }
 
   ngOnInit() {
 
-    if (this.sentNewRecipes === undefined) {
-      console.log('sentNewRecipes not ready')
-      this.dataService.getRecipes()
-        .subscribe(res => {
-          console.log(res['Recipes'], 'recipes');
-          this.newRecipes = res['Recipes'];
-        })
+     this.fbService.getRecipes()
+      .subscribe(res => { 
+        this.newRecipes = res;
 
-      let i;
-      this.newRecipes.forEach((item, index) => {
-        i = index;
-        if (this.newRecipes[i].id === this.recipe.id) {
-          this.recipeIndex = i;
-        }
+         let i;
+          this.newRecipes.forEach((item, index) => {
+            i = index;
+            if (this.newRecipes[i].id === this.recipe.id) {
+              this.recipeIndex = i;
+            }
+          })
       })
-
-    } else {
-      this.newRecipes = this.sentNewRecipes;
-      let i;
-      this.newRecipes.forEach((item, index) => {
-        i = index;
-        if (this.newRecipes[i].id === this.recipe.id) {
-          this.recipeIndex = i;
-        }
-      })
-    }
 
   }
 }

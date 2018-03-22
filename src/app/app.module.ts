@@ -26,6 +26,18 @@ import { RecipesComponent, EditDialog } from './recipes/recipes.component';
 import { HighlightSearchPipe } from './highlight-search.pipe';
 import { FilterPipe } from './filter.pipe';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import { masterFirebaseConfig } from './api-keys';
+
+import { FirebaseService } from './firebase.service';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+export const firebaseConfig = {
+  apiKey: masterFirebaseConfig.apiKey,
+  authDomain: masterFirebaseConfig.authDomain,
+  databaseURL: masterFirebaseConfig.databaseURL
+};
 
 const routes: Routes = [
  {
@@ -65,6 +77,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
@@ -84,9 +98,10 @@ const routes: Routes = [
     MatProgressSpinnerModule,
     MatSidenavModule,
     BrowserAnimationsModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     RouterModule.forRoot(routes)
   ],
-  providers: [DataService],
+  providers: [DataService, FirebaseService],
   entryComponents: [
     RecipeDialog, EditDialog
   ],
