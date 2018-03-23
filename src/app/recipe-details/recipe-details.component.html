@@ -1,5 +1,5 @@
 <div *ngIf="selectedRecipe != null">
   <h1>{{selectedRecipe.title}}</h1>
-  <img src="../assets/images/recipe-logo.jpeg" alt="">
+  <img src="{{selectedRecipe.image}}" alt="">
   <p>{{selectedRecipe.desc}}</p>
 </div>
